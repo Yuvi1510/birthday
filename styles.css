@@ -104,14 +104,15 @@ main {
 
 /* Mobile-first Album Container */
 .album-container {
+    display:none;
     position: relative;
     z-index: 10;
-    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     max-width: 800px;
+    height: 350px;
     margin: 0 auto;
     padding: 10px;
 }
@@ -121,7 +122,7 @@ main {
     position: relative;
     width: 100%;
     max-width: 800px;
-    height: auto;
+    height: 250px;
     aspect-ratio: 16 / 10;
     perspective: 1000px;
     margin-bottom: 20px;
@@ -131,7 +132,7 @@ main {
 .page {
     position: absolute;
     width: 50%;
-    height: 100%;
+    height: 250px;
     background: var(--paper);
     border-radius: 8px;
     box-shadow: 0 5px 15px var(--shadow);
@@ -161,7 +162,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     text-align: center;
     gap: 10px;
 }
