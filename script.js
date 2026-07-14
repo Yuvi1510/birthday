@@ -25,25 +25,25 @@ const HEART_IMAGE_ARRAY = [
 
 // ==================== ALBUM PAGES CONFIGURATION ====================
 const ALBUM_PAGES = [
-    { left: { type: 'text', content: { title: '💝 Birthday Album 💝', description: 'Special moments with Yuvraj\n\nHere are our beautiful memories!' } }, 
-      right: { type: 'image', src: IMAGE_ALBUM_PAGE_1, caption: 'Happy Birthday Yuvraj! 🎂' } },
+    { left: { type: 'text', content: { title: '🎉 Happy Birthday!', description: 'Wishing you endless joy and happiness.' } }, 
+      right: { type: 'image', src: IMAGE_ALBUM_PAGE_1, caption: '🎂 May your life be filled\nwith love and laughter.' } },
     
-    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_2_LEFT, caption: 'First Meeting 👋' }, 
-      right: { type: 'image', src: IMAGE_ALBUM_PAGE_2_RIGHT, caption: 'Fun Times 😄' } },
+    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_2_LEFT, caption: '🌸 May love, peace, and prosperity always\nsurround you.' }, 
+      right: { type: 'image', src: IMAGE_ALBUM_PAGE_2_RIGHT, caption: '🌟 May all your dreams come true.' } },
     
-    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_3_LEFT, caption: 'Adventures 🌟' }, 
-      right: { type: 'image', src: IMAGE_ALBUM_PAGE_3_RIGHT, caption: 'Celebrations 🎉' } },
+    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_3_LEFT, caption: '💖 Wishing you good health and lasting happiness.' }, 
+      right: { type: 'image', src: IMAGE_ALBUM_PAGE_3_RIGHT, caption: '🌸 May God bless you every single day.' } },
     
-    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_4_LEFT, caption: 'Friendship 🤝' }, 
-      right: { type: 'image', src: IMAGE_ALBUM_PAGE_4_RIGHT, caption: 'Laughter 😂' } },
+    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_4_LEFT, caption: '✨ Keep smiling and shining wherever you go.' }, 
+      right: { type: 'image', src: IMAGE_ALBUM_PAGE_4_RIGHT, caption: '🌈 May success follow you in everything you do.' } },
     
-    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_5_LEFT, caption: 'Together 💑' }, 
-      right: { type: 'text', content: { title: 'Thank You! ❤️', description: 'For all the wonderful memories\n\nYou make life special!\n\nLove You Always!' } } }
+    { left: { type: 'image', src: IMAGE_ALBUM_PAGE_5_LEFT, caption: '🌹 Stay blessed, stay kind, and stay amazing.' }, 
+      right: { type: 'text', content: { title: '❤️ Happy Birthday!', description: 'Have a wonderful year ahead. 🎊' } } }
 ];
 
 // ==================== FINAL CELEBRATION MESSAGES ====================
 const FINAL_TITLE = "🎉 Happy Birthday Yuvraj! 🎉";
-const FINAL_SUBTITLE = "You are the heart of our celebrations! ❤️";
+const FINAL_SUBTITLE = "Wishing you a long, healthy,\nwealthy and happy life🎊💝";
 
 // ==================== HEART ANIMATION SETTINGS ====================
 const HEART_SETTINGS = {
@@ -73,10 +73,23 @@ const CONFETTI_SETTINGS = {
 
 // ==================== END OF CUSTOMIZABLE VARIABLES ====================
 
+const playBtn = document.getElementById("playMusicBtn");
+const music = document.getElementById("backgroundMusic");
+
+playBtn.addEventListener("click", () => {
+    playBtn.style.display = "none"; // Hide the button after clicking
+    startBirthdayMessages();
+});
+
+const  startBirthdayMessages = () => {
+
 // ===== BIRTHDAY MESSAGE CODE =====
 BIRTHDAY_MESSAGES.forEach((value, index) => {
     setTimeout(() => {
         document.getElementById("message").innerText = value;
+        if (index === 4) {
+            music.play();
+        }
     }, index * TIMING.messageDelay);
 });
 
@@ -520,3 +533,4 @@ setTimeout(() => {
     }
     showAlbum();
 }, albumShowDelay);
+}

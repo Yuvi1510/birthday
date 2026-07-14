@@ -443,3 +443,14 @@ main {
         transform: translate(-50%, 0);
     }
 }
+
+#playMusicBtn{
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: var(--rose);
+    color: white;
+    font-size: clamp(16px, 4vw, 24px);
+    padding: 10px 20px;
+    z-index: 1000;
+}

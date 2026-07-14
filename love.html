@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>I Love You | Endless Falling Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* MOBILE-FIRST — continuous falling, no gaps ever */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ff9a9e 0%, #fecfef 40%, #ffe4e8 100%);
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Quicksand', 'Poppins', 'Dancing Script', -apple-system, BlinkMacSystemFont, cursive;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* soft romantic floating background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,200,215,0.3), transparent 75%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* container for all falling items */
+        #falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        /* each falling element - smooth animations */
+        .fall-item {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform, top;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+            animation: gentleSwayMobile 2.2s infinite alternate ease-in-out;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        @keyframes gentleSwayMobile {
+            0% {
+                transform: rotate(0deg) translateX(0px);
+                filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1));
+            }
+            100% {
+                transform: rotate(2.5deg) translateX(3px);
+                filter: drop-shadow(0 6px 14px rgba(255,80,120,0.25));
+            }
+        }
+
+        /* TEXT STYLE: "I Love You" ONLY */
+        .love-text {
+            font-size: clamp(1.2rem, 6vw, 2rem);
+            font-weight: 800;
+            font-family: 'Dancing Script', 'Segoe UI', 'Pacifico', system-ui, cursive;
+            background: linear-gradient(135deg, #ff2e63, #ff6b8b, #ff9f4a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 12px rgba(255, 80, 120, 0.4);
+            white-space: nowrap;
+            padding: 0.2rem 0.7rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+            background-color: rgba(255, 245, 240, 0.45);
+            display: inline-block;
+            letter-spacing: 0.5px;
+            border: 0.5px solid rgba(255, 220, 200, 0.7);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* PHOTO STYLE */
+        .love-photo {
+            width: auto;
+            height: auto;
+            max-width: 70px;
+            max-height: 70px;
+            min-width: 52px;
+            min-height: 52px;
+            border-radius: 28px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255, 245, 235, 0.95);
+            object-fit: cover;
+            background: #fff5ef;
+            padding: 3px;
+            will-change: transform;
+        }
+
+        .fall-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+        }
+
+        /* subtle corner whisper — minimal poetry */
+        .romantic-whisper {
+            position: fixed;
+            bottom: 12px;
+            left: 12px;
+            z-index: 25;
+            font-family: 'Dancing Script', cursive;
+            font-size: 0.7rem;
+            color: rgba(160, 50, 70, 0.55);
+            background: rgba(255, 235, 240, 0.5);
+            backdrop-filter: blur(6px);
+            padding: 4px 12px;
+            border-radius: 40px;
+            pointer-events: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* larger devices */
+        @media (min-width: 768px) {
+            .love-text {
+                font-size: clamp(1.5rem, 3vw, 2.2rem);
+                padding: 0.2rem 1rem;
+            }
+            .love-photo {
+                max-width: 90px;
+                max-height: 90px;
+                min-width: 65px;
+                min-height: 65px;
+            }
+            .romantic-whisper {
+                font-size: 0.85rem;
+                bottom: 18px;
+                left: 18px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .love-text {
+                font-size: 1rem;
+                padding: 0.1rem 0.5rem;
+            }
+            .love-photo {
+                max-width: 55px;
+                max-height: 55px;
+                min-width: 45px;
+                min-height: 45px;
+            }
+            .romantic-whisper {
+                font-size: 0.6rem;
+                bottom: 8px;
+                left: 8px;
+            }
+        }
+
+        html, body {
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div id="falling-container"></div>
+<div class="romantic-whisper">💕 I Love You · forever falling 💕</div>
+
+<script>
+    (function() {
+        // ==============================================================
+        // CONTINUOUS FALLING - NO GAPS EVER
+        // Mobile-first, infinite cascade of "I Love You" text + photos
+        // Maintains perfect density: as items fall off, new ones spawn
+        // immediately to ensure the screen is ALWAYS filled.
+        // ==============================================================
+        
+        const CONTAINER = document.getElementById('falling-container');
+        
+        // Romantic photo collection (love-themed, mobile-friendly)
+        const PHOTO_URLS = [
+            "https://images.unsplash.com/photo-1516589091380-5d0e9c6c6e6a?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1518199266791-5375a83190b2?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1518621736915-f3b1c41e3f4d?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=140&h=140&fit=crop",
+            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=140&h=140&fit=crop"
+        ];
+        
+        // ---------- FALLING ENTITY ----------
+        class FallingItem {
+            constructor(element, speedY, startX, width, height) {
+                this.element = element;
+                this.speed = speedY;          // pixels per second
+                this.y = -height - Math.random() * 150;
+                this.x = startX;
+                this.width = width;
+                this.height = height;
+                this.element.style.left = this.x + 'px';
+                this.element.style.top = this.y + 'px';
+            }
+            
+            update(deltaSec) {
+                this.y += this.speed * deltaSec;
+                this.element.style.top = this.y + 'px';
+                
+                const viewportHeight = window.innerHeight;
+                // Remove when far below viewport
+                if (this.y > viewportHeight + this.height + 300) {
+                    this.destroy();
+                    return false;
+                }
+                return true;
+            }
+            
+            destroy() {
+                if (this.element && this.element.parentNode) {
+                    this.element.parentNode.removeChild(this.element);
+                }
+            }
+        }
+        
+        // Global state
+        let activeItems = [];
+        let animFrameId = null;
+        let previousTimestamp = 0;
+        
+        // DENSITY: continuous flow means we keep item count between 55 and 90
+        // NO GAPS: we will spawn proactively and also use a continuous micro-spawner
+        const TARGET_MIN = 55;
+        const TARGET_MAX = 90;
+        
+        // For seamless continuous flow: we also spawn items incrementally every frame
+        // to ensure that even if many fall off at once, new ones appear instantly.
+        // But to avoid over-spawning, we check each frame (or every few frames)
+        let frameCounter = 0;
+        const FRAMES_BETWEEN_SPAWN_CHECKS = 3; // check every ~3 frames for smoothness
+        
+        function randomRange(min, max) {
+            return min + Math.random() * (max - min);
+        }
+        
+        // ----- CREATE either "I Love You" text OR photo (balanced) -----
+        function createFallingElement() {
+            const isPhoto = Math.random() < 0.5;
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('fall-item');
+            
+            if (isPhoto) {
+                const randomIdx = Math.floor(Math.random() * PHOTO_URLS.length);
+                const imgUrl = PHOTO_URLS[randomIdx];
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.alt = "I Love You";
+                img.classList.add('love-photo');
+                const photoSize = randomRange(52, 78);
+                img.style.width = photoSize + 'px';
+                img.style.height = photoSize + 'px';
+                img.style.objectFit = 'cover';
+                img.loading = "eager";
+                wrapper.appendChild(img);
+            } else {
+                const textSpan = document.createElement('span');
+                textSpan.classList.add('love-text');
+                // EXACT SENTENCE: "I Love You" as required
+                textSpan.innerText = "I Love You";
+                const fontSizeRem = randomRange(1.1, 1.9);
+                textSpan.style.fontSize = fontSizeRem + 'rem';
+                wrapper.appendChild(textSpan);
+            }
+            
+            CONTAINER.appendChild(wrapper);
+            const rect = wrapper.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+            
+            const maxX = Math.max(0, window.innerWidth - width);
+            const startX = randomRange(0, maxX);
+            
+            // Medium pace: 55px/sec to 118px/sec
+            const speedPerSec = randomRange(55, 118);
+            
+            const fallingObj = new FallingItem(wrapper, speedPerSec, startX, width, height);
+            fallingObj.y = -height - randomRange(0, 200);
+            fallingObj.update(0);
+            return fallingObj;
+        }
+        
+        // Spawn a specific number of items instantly (for initial fill and refills)
+        function spawnItems(count) {
+            for (let i = 0; i < count; i++) {
+                const newItem = createFallingElement();
+                activeItems.push(newItem);
+            }
+        }
+        
+        // CRITICAL: Continuous gap prevention - this ensures the flow NEVER has empty spaces
+        // We maintain ideal density by checking and replenishing instantly
+        function maintainContinuousFlow() {
+            const currentCount = activeItems.length;
+            
+            // If below minimum, spawn enough to reach ideal (target_min + 10 for buffer)
+            if (currentCount < TARGET_MIN) {
+                const deficit = TARGET_MIN - currentCount;
+                const toSpawn = Math.min(deficit + 8, 22); // spawn generously but not overwhelming
+                if (toSpawn > 0) {
+                    spawnItems(toSpawn);
+                }
+            }
+            // If slightly above max, do nothing (natural falling will reduce)
+            // But if extremely above (rare), we let nature take its course.
+        }
+        
+        // Also add a secondary timer-based spawner for absolute insurance (no gaps ever)
+        let insuranceInterval = null;
+        
+        // ----- ANIMATION LOOP with delta time + frame-based continuous replenishment -----
+        function animateFalling(nowMs) {
+            if (!previousTimestamp) {
+                previousTimestamp = nowMs;
+                animFrameId = requestAnimationFrame(animateFalling);
+                return;
+            }
+            
+            let delta = Math.min(0.033, (nowMs - previousTimestamp) / 1000);
+            if (delta <= 0) {
+                previousTimestamp = nowMs;
+                animFrameId = requestAnimationFrame(animateFalling);
+                return;
+            }
+            
+            // Update all falling items
+            const remainingItems = [];
+            for (let i = 0; i < activeItems.length; i++) {
+                const item = activeItems[i];
+                const isAlive = item.update(delta);
+                if (isAlive) {
+                    remainingItems.push(item);
+                }
+            }
+            activeItems = remainingItems;
+            
+            // CONTINUOUS FLOW MAINTENANCE: check every few frames to avoid gaps
+            frameCounter++;
+            if (frameCounter >= FRAMES_BETWEEN_SPAWN_CHECKS) {
+                frameCounter = 0;
+                maintainContinuousFlow();
+            }
+            
+            previousTimestamp = nowMs;
+            animFrameId = requestAnimationFrame(animateFalling);
+        }
+        
+        // ----- HANDLE RESIZE (orientation changes, no gaps on resize) -----
+        function handleResize() {
+            const viewWidth = window.innerWidth;
+            for (let item of activeItems) {
+                if (item.element && item.element.parentNode) {
+                    const rect = item.element.getBoundingClientRect();
+                    const elemWidth = rect.width;
+                    let newX = item.x;
+                    const maxX = Math.max(0, viewWidth - elemWidth);
+                    if (newX > maxX) newX = maxX;
+                    if (newX < 0) newX = 0;
+                    item.x = newX;
+                    item.element.style.left = item.x + 'px';
+                }
+            }
+            // After resize, also check density because viewport changed
+            maintainContinuousFlow();
+        }
+        
+        // Throttled resize handler for mobile
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                handleResize();
+            }, 100);
+        });
+        
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                handleResize();
+            }, 80);
+        });
+        
+        // ----- INITIALIZE with PERFECT CONTINUOUS DENSITY -----
+        function initializeContinuousFall() {
+            // Start with a generous medium-high amount (no gaps from the beginning)
+            const INITIAL_COUNT = 72;
+            spawnItems(INITIAL_COUNT);
+            
+            // Set up an insurance interval that runs every 1.2 seconds
+            // This guarantees that even if frame-based check misses something,
+            // the flow remains continuous forever.
+            insuranceInterval = setInterval(() => {
+                // Extra safety check: if count drops too low, refill immediately
+                const currCount = activeItems.length;
+                if (currCount < TARGET_MIN) {
+                    const needed = TARGET_MIN - currCount + 5;
+                    spawnItems(Math.min(needed, 18));
+                }
+                // Also if the count is extremely low (< 30) due to any anomaly, do a bigger refill
+                if (currCount < 35) {
+                    spawnItems(18);
+                }
+            }, 1100); // frequent enough to ensure no gap ever appears
+            
+            // Start animation loop
+            animateFalling();
+        }
+        
+        // Handle page visibility to save resources but maintain continuity when visible
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                if (animFrameId) {
+                    cancelAnimationFrame(animFrameId);
+                    animFrameId = null;
+                }
+            } else {
+                if (!animFrameId) {
+                    previousTimestamp = 0;
+                    animFrameId = requestAnimationFrame(animateFalling);
+                }
+                // Immediately check and fill any potential gap after coming back
+                maintainContinuousFlow();
+                setTimeout(() => {
+                    maintainContinuousFlow();
+                }, 50);
+            }
+        }
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Also add a mutation-free backup: every 2.5 seconds, ensure top area is filled
+        // This prevents any "sky gaps" — items continuously spawn from top.
+        let topFillerInterval = null;
+        
+        function ensureTopFilled() {
+            // This looks at how many items are in the upper half of screen
+            // If there are too few near the top, spawn a few new ones.
+            const viewportMid = window.innerHeight * 0.3;
+            let itemsNearTop = 0;
+            for (let item of activeItems) {
+                if (item.y < viewportMid + 100) {
+                    itemsNearTop++;
+                }
+            }
+            // If fewer than 12 items in top region, spawn extra to avoid visual gap
+            if (itemsNearTop < 12) {
+                spawnItems(5);
+            }
+        }
+        
+        // run top filler every 2 seconds for silky smooth continuous appearance
+        topFillerInterval = setInterval(() => {
+            if (!document.hidden) {
+                ensureTopFilled();
+                // also run the main density check again
+                maintainContinuousFlow();
+            }
+        }, 1800);
+        
+        // Start everything after load
+        window.addEventListener('load', () => {
+            initializeContinuousFall();
+            // extra resize handling after fonts load
+            setTimeout(() => {
+                handleResize();
+                maintainContinuousFlow();
+            }, 120);
+        });
+        
+        // Cleanup on page unload (good practice)
+        window.addEventListener('beforeunload', () => {
+            if (insuranceInterval) clearInterval(insuranceInterval);
+            if (topFillerInterval) clearInterval(topFillerInterval);
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+        });
+        
+        // Expose nothing — just pure, gap-free, endless love
+    })();
+</script>
+</body>
+</html>
