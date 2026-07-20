@@ -18,7 +18,7 @@ const IMAGE_HEART_CARDS = 'image8.jpg';       // All heart animation cards
 
 // Alternative: You can also use an array for different heart images
 const HEART_IMAGE_ARRAY = [
-    'image.jpg',
+    'image8.jpg',
     'image8.jpg',
     'image8.jpg'
 ];
