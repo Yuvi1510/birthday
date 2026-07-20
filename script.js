@@ -1,26 +1,26 @@
 // ==================== 🎨 CUSTOMIZABLE VARIABLES 🎨 ====================
 
 // Birthday message sequence (appears one by one)
-const BIRTHDAY_MESSAGES = ["", "3", "2", "1", "Happy", "Birthday", "To", "You!", "Yuvraj"];
+const BIRTHDAY_MESSAGES = ["", "3", "2", "1", "Happy", "Birthday", "To", "You!", "Yamuu"];
 
 // ==================== IMAGE PATH VARIABLES ====================
 // You can change these to different images or keep them the same
-const IMAGE_ALBUM_PAGE_1 = 'image.jpg';      // Album page 1 right side
-const IMAGE_ALBUM_PAGE_2_LEFT = 'image.jpg'; // Album page 2 left side
-const IMAGE_ALBUM_PAGE_2_RIGHT = 'image.jpg';// Album page 2 right side
-const IMAGE_ALBUM_PAGE_3_LEFT = 'image.jpg'; // Album page 3 left side
-const IMAGE_ALBUM_PAGE_3_RIGHT = 'image.jpg';// Album page 3 right side
-const IMAGE_ALBUM_PAGE_4_LEFT = 'image.jpg'; // Album page 4 left side
-const IMAGE_ALBUM_PAGE_4_RIGHT = 'image.jpg';// Album page 4 right side
-const IMAGE_ALBUM_PAGE_5_LEFT = 'image.jpg'; // Album page 5 left side
+const IMAGE_ALBUM_PAGE_1 = 'image1.jpeg';      // Album page 1 right side
+const IMAGE_ALBUM_PAGE_2_LEFT = 'image2.jpeg'; // Album page 2 left side
+const IMAGE_ALBUM_PAGE_2_RIGHT = 'image3.jpeg';// Album page 2 right side
+const IMAGE_ALBUM_PAGE_3_LEFT = 'image4.png'; // Album page 3 left side
+const IMAGE_ALBUM_PAGE_3_RIGHT = 'image5.jpg';// Album page 3 right side
+const IMAGE_ALBUM_PAGE_4_LEFT = 'image6.jpg'; // Album page 4 left side
+const IMAGE_ALBUM_PAGE_4_RIGHT = 'image7.jpg';// Album page 4 right side
+const IMAGE_ALBUM_PAGE_5_LEFT = 'image9.webp'; // Album page 5 left side
 
-const IMAGE_HEART_CARDS = 'image.jpg';       // All heart animation cards
+const IMAGE_HEART_CARDS = 'image8.jpg';       // All heart animation cards
 
 // Alternative: You can also use an array for different heart images
 const HEART_IMAGE_ARRAY = [
     'image.jpg',
-    'image.jpg',
-    'image.jpg'
+    'image8.jpg',
+    'image8.jpg'
 ];
 
 // ==================== ALBUM PAGES CONFIGURATION ====================
@@ -42,7 +42,7 @@ const ALBUM_PAGES = [
 ];
 
 // ==================== FINAL CELEBRATION MESSAGES ====================
-const FINAL_TITLE = "🎉 Happy Birthday Yuvraj! 🎉";
+const FINAL_TITLE = "🎉 Happy Birthday Yamuu! 🎉";
 const FINAL_SUBTITLE = "Wishing you a long, healthy,\nwealthy and happy life🎊💝";
 
 // ==================== HEART ANIMATION SETTINGS ====================
@@ -87,7 +87,7 @@ const  startBirthdayMessages = () => {
 BIRTHDAY_MESSAGES.forEach((value, index) => {
     setTimeout(() => {
         document.getElementById("message").innerText = value;
-        if (index === 4) {
+        if (index === 3) {
             music.play();
         }
     }, index * TIMING.messageDelay);
